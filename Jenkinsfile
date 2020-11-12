@@ -7,5 +7,11 @@ pipeline {
                 echo 'Hello World'
             }
         }
+        
+        stage('all') {
+			steps {
+				sh 'mvn clean'
+			}
+		}
     }
 }
