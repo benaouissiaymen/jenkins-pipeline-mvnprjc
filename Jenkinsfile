@@ -9,9 +9,9 @@ pipeline {
         }
         
         stage('all') {
-			steps {
-				sh 'mvn clean'
-			}
-		}
+	    steps {
+		sh 'mvn clean'
+	    }
+	}
     }
 }
