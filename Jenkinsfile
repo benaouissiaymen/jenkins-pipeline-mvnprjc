@@ -13,7 +13,7 @@ tools {
         
         stage('all') {
 	    steps {
-		sh 'mvn clean package'
+		bat 'mvn clean package'
 	    }
 	}
     }
