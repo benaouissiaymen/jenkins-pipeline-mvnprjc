@@ -10,7 +10,7 @@
     <version>1.0-SNAPSHOT</version>
     <name>java-web-project Maven Webapp</name>
     <url>http://maven.apache.org</url>
-  
+    
     <properties>
         <!-- https://maven.apache.org/general.html#encoding-warning -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
