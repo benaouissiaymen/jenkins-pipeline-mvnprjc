@@ -1,1 +1,48 @@
 
+pipeline {
+    agent any
+
+    tools {
+        maven 'Maven363'
+        jdk 'JDK11'
+    }
+
+    stages {
+        stage('Compile Maven') {
+            steps {
+                bat "mvn -Dmaven.test.failure.ignore=true clean package"
+            }
+        }
+        
+        stage('Analyse SonarQube') {
+            steps {
+                withSonarQubeEnv('sonar851') { 
+                    bat "mvn sonar:sonar"
+                }
+            }
+        }
+        
+        stage("Quality Gate with Webhook") {
+            steps {
+                script {
+                    timeout(time: 2, unit: 'MINUTES') {
+                        def qg = waitForQualityGate()
+                        if (qg.status != 'OK') {
+                           error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                        }
+                    }
+                }
+              
+            }
+        }
+        
+        stage('Deployement Apache tomcat') {
+            steps {
+                echo 'Deployement Apache tomcat'
+                deploy adapters: [tomcat9(credentialsId: '28267caf-e1db-4867-a71f-644dd0d101c3', 
+                path: '', url: 'http://localhost:8081/')], contextPath: null, onFailure: false,  
+                war: 'target/java-web-project.war'
+            }
+        }
+    }
+}
