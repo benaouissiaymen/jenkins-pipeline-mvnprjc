@@ -15,6 +15,8 @@ public class WelcomeController {
 
     @GetMapping("/")
     public String index(Model model) {
+        Integer i = null;
+        i = i * 2;
         logger.debug("Welcome to mkyong.com...");
         model.addAttribute("msg", getMessage());
         model.addAttribute("today", new Date());
